@@ -8,7 +8,7 @@ on:
 
 jobs:
   pre-commit:
-    runs-on: ubuntu-latestxrx
+    runs-on: aaaaaaubuntu-latestxrx
     strategy:
       fail-fast: true
       matrix:

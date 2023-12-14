@@ -14,5 +14,5 @@ Status of github actions:
   4. run `poetry run dvc pull` to get all datasets and models (may take a few dozens of minutes)
 
 ## Experiments reproduction
- - `poetry run train.py`
- - `poetry run infer.py`
+ - `poetry run python train.py`
+ - `poetry run python infer.py`

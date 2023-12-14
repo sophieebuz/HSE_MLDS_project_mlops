@@ -11,14 +11,14 @@ y = wine.target
 df = pd.DataFrame(X, columns=wine.feature_names)
 
 dftrain, dftest, ytrain, ytest = train_test_split(
-    df, y, test_size=0.3, stratify=y, random_state=123
+    df, y, test_size=0.3, stratify=y, random_state=42
 )
 
 dftrain["target"] = ytrain
 dftest["target"] = ytest
 
 if not os.path.isdir("data"):
-     os.mkdir("data")
+    os.mkdir("data")
 if os.path.exists("data/dftrain.csv"):
     os.remove("data/dftrain.csv")
 if os.path.exists("data/dftest.csv"):

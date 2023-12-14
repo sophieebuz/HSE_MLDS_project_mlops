@@ -1,6 +1,6 @@
 import pandas as pd
-from sklearn.metrics import classification_report
 from catboost import CatBoostClassifier
+from sklearn.metrics import classification_report
 
 
 dftest = pd.read_csv("data/dftest.csv")

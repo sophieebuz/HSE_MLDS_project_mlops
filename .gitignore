@@ -2,3 +2,7 @@
 .idea
 /data
 /catboost_info
+Catboost_model.cbm
+/multirun
+/outputs
+__pycache__/

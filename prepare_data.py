@@ -11,7 +11,7 @@ y = wine.target
 df = pd.DataFrame(X, columns=wine.feature_names)
 
 dftrain, dftest, ytrain, ytest = train_test_split(
-    df, y, test_size=0.3, stratify=y, random_state=42
+    df, y, test_size=0.3, stratify=y, random_state=123
 )
 
 dftrain["target"] = ytrain

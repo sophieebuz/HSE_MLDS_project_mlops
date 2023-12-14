@@ -1,20 +1,35 @@
 import os
 
+import hydra
 import pandas as pd
 from catboost import CatBoostClassifier
+from hydra.core.config_store import ConfigStore
+from omegaconf import OmegaConf
+
+from config_hyrda import CatBoostConfig
 
 
-dftrain = pd.read_csv("data/dftrain.csv")
+cs = ConfigStore.instance()
+cs.store(name="catboost_config", node=CatBoostConfig)
 
-clf = CatBoostClassifier(
-    random_state=123, loss_function="MultiClass", eval_metric="TotalF1"
-)
 
-clf.fit(dftrain, dftrain["target"])
+@hydra.main(config_path="conf_hydra", config_name="config", version_base=None)
+def main(cfg: CatBoostConfig) -> None:
+    print(OmegaConf.to_yaml(cfg))
 
-model_save_file = "Catboost_model.cbm"
+    dftrain = pd.read_csv("data/dftrain.csv")
 
-if os.path.exists(model_save_file):
-    os.remove(model_save_file)
+    clf = CatBoostClassifier(**cfg.params)
 
-clf.save_model(model_save_file, format="cbm")
+    clf.fit(dftrain, dftrain["target"])
+
+    model_save_file = "Catboost_model.cbm"
+
+    if os.path.exists(model_save_file):
+        os.remove(model_save_file)
+
+    clf.save_model(model_save_file, format="cbm")
+
+
+if __name__ == "__main__":
+    main()

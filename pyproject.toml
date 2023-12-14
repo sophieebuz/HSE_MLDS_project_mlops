@@ -8,7 +8,7 @@ repository = "https://github.com/sophieebuz/HSE_MLDS_project_mlops.git"
 packages = [{include = "hse_mlds_project_mlops"}]
 
 [tool.poetry.dependencies]
-python = "3.10.8"
+python = "^3.10.8"
 pandas = "^2.1.3"
 scikit-learn = "^1.3.2"
 catboost = "^1.2.2"

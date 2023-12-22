@@ -1,12 +1,15 @@
 defaults:
   - _self_
+
 paths:
   dftrain: "data/dftrain.csv"
   dftest: "data/dftest.csv"
   model: "data/model.pt"
   pred: "data/predictions.csv"
+
 seed :
   seed : 13
+
 loader_train :
   batch_size: 64
   shuffle: True
@@ -15,11 +18,14 @@ loader_test:
   batch_size: 64
   shuffle: False
   pin_memory: True
+
 device : "cpu"
-num_epochs: 100
+num_epochs: 300
 plot: False
+
 optimizer :
   lr : 1e-3
+
 run_mlflow :
   run_mlflow: False
   exp_name: "MLP Classifier"

@@ -27,7 +27,7 @@ def main(cfg: VineConfig) -> None:
     g = torch.Generator()
     g.manual_seed(0)
 
-    # os.system("dvc pull")
+    os.system("dvc pull")
 
     path_train = cfg.paths.dftrain
     train_set = VineDataset(path_train)
@@ -56,13 +56,15 @@ def main(cfg: VineConfig) -> None:
     # print(f"Current tracking uri: {tracking_uri}")
     run_mlflow = cfg.run_mlflow.run_mlflow
     if run_mlflow:
-        # exp_name = cfg.run_mlflow.exp_name
-        # experiment_id = mlflow.create_experiment(exp_name)
-        # print(experiment_id)
-        # mlflow.set_experiment(exp_name)
+        exp_name = cfg.run_mlflow.exp_name
+        experiment_id = mlflow.create_experiment(exp_name)
+        print(experiment_id)
+        mlflow.set_experiment(exp_name)
+        # experiment_id=973347247450672054
+        # experiment_id = 658355158496838367
 
         with mlflow.start_run(
-            run_name=cfg.run_mlflow.run_name, experiment_id=973347247450672054
+            run_name=cfg.run_mlflow.run_name, experiment_id=experiment_id
         ):
             train_losses, test_losses, train_metrics, test_metrics = train(
                 model,
@@ -93,7 +95,7 @@ def main(cfg: VineConfig) -> None:
             run_mlflow,
         )
 
-    print(test_metrics["f1 macro"])
+    # print(test_metrics["f1 macro"])
 
     model_save_file = cfg.paths.model
     if os.path.exists(model_save_file):

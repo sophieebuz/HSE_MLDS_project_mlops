@@ -17,6 +17,7 @@ def training_epoch(
     train_loader: DataLoader,
     device: str,
     run_mlflow: bool,
+    epoch: int,
 ):
     num_batches = 0.0
     train_loss = 0.0
@@ -50,10 +51,10 @@ def training_epoch(
     for m_name in metrics:
         metrics[m_name] /= num_batches
     if run_mlflow:
-        mlflow.log_metric("accuracy_train", metrics["accuracy"])
-        mlflow.log_metric("precision_train", metrics["precision"])
-        mlflow.log_metric("recall_train", metrics["recall"])
-        mlflow.log_metric("f1 macro_train", metrics["f1 macro"])
+        mlflow.log_metric("accuracy_train", metrics["accuracy"], step=epoch)
+        mlflow.log_metric("precision_train", metrics["precision"], step=epoch)
+        mlflow.log_metric("recall_train", metrics["recall"], step=epoch)
+        mlflow.log_metric("f1 macro_train", metrics["f1 macro"], step=epoch)
     return train_loss, metrics
 
 
@@ -64,6 +65,7 @@ def validation_epoch(
     test_loader: DataLoader,
     device: str,
     run_mlflow: bool,
+    epoch: int,
 ):
     num_batches = 0.0
     test_loss = 0.0
@@ -92,10 +94,10 @@ def validation_epoch(
     for m_name in metrics:
         metrics[m_name] /= num_batches
     if run_mlflow:
-        mlflow.log_metric("accuracy_test", metrics["accuracy"])
-        mlflow.log_metric("precision_test", metrics["precision"])
-        mlflow.log_metric("recall_test", metrics["recall"])
-        mlflow.log_metric("f1 macro_test", metrics["f1 macro"])
+        mlflow.log_metric("accuracy_test", metrics["accuracy"], step=epoch)
+        mlflow.log_metric("precision_test", metrics["precision"], step=epoch)
+        mlflow.log_metric("recall_test", metrics["recall"], step=epoch)
+        mlflow.log_metric("f1 macro_test", metrics["f1 macro"], step=epoch)
     return test_loss, metrics
 
 
@@ -115,7 +117,7 @@ def train(
     test_losses = []
     train_metrics, test_metrics = defaultdict(list), defaultdict(list)
 
-    for _epoch in range(1, num_epochs + 1):
+    for epoch in range(1, num_epochs + 1):
         train_loss, train_metric = training_epoch(
             model,
             optimizer,
@@ -123,6 +125,7 @@ def train(
             train_loader,
             device,
             run_mlflow,
+            epoch,
         )
         test_loss, test_metric = validation_epoch(
             model,
@@ -130,6 +133,7 @@ def train(
             test_loader,
             device,
             run_mlflow,
+            epoch,
         )
 
         if scheduler is not None:

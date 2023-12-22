@@ -1,0 +1,16 @@
+defaults:
+  - _self_
+seed :
+  seed : 13
+loader_train :
+  batch_size: 64
+  shuffle: True
+  pin_memory: True
+loader_test:
+  batch_size: 64
+  shuffle: False
+  pin_memory: True
+device : "cpu"
+num_epochs: 10
+optimizer :
+  lr : 1e-3

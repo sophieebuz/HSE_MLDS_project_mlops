@@ -6,3 +6,8 @@ Catboost_model.cbm
 /multirun
 /outputs
 __pycache__/
+old_infer.py
+old_train.py
+old_config_hyrda.py
+/conf_hydra
+/mlruns

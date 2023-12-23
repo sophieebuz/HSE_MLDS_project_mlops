@@ -27,6 +27,6 @@ optimizer :
   lr : 1e-3
 
 run_mlflow :
-  run_mlflow: False
+  run_mlflow: True
   exp_name: "MLP Classifier"
   run_name: "run 1"

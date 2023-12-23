@@ -17,5 +17,6 @@ This dataset contains 13 different parameters for wine with 178 samples. The pur
   4. run `poetry run pre-commit run --all-files` to check the correct work of pre-commit
 
 ## Experiments reproduction
+ - open a new terminal, go to the project folder, then enter the command `poetry run mlflow server --host 127.0.0.1 --port 8080` to raise mlflow service locally
  - `poetry run python train.py`
  - `poetry run python infer.py`

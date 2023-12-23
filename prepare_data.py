@@ -17,10 +17,12 @@ dftrain, dftest, ytrain, ytest = train_test_split(
 dftrain["target"] = ytrain
 dftest["target"] = ytest
 
-if os.path.exists("dftrain.csv"):
-    os.remove("dftrain.csv")
-if os.path.exists("dftest.csv"):
-    os.remove("dftest.csv")
+if not os.path.isdir("data"):
+    os.mkdir("data")
+if os.path.exists("data/dftrain.csv"):
+    os.remove("data/dftrain.csv")
+if os.path.exists("data/dftest.csv"):
+    os.remove("data/dftest.csv")
 
-dftrain.to_csv("dftrain.csv", index=False)
-dftest.to_csv("dftest.csv", index=False)
+dftrain.to_csv("data/dftrain.csv", index=False)
+dftest.to_csv("data/dftest.csv", index=False)

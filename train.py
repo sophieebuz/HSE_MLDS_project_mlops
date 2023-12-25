@@ -51,7 +51,7 @@ def main(cfg: VineConfig) -> None:
     criterion = nn.CrossEntropyLoss().to(DEVICE)
 
     # print(mlflow.get_tracking_uri())
-    # mlflow.set_tracking_uri("http://128.0.1.1:8080")
+    mlflow.set_tracking_uri("http://128.0.1.1:8080")
     # tracking_uri = mlflow.get_tracking_uri()
     # print(f"Current tracking uri: {tracking_uri}")
     run_mlflow = cfg.run_mlflow.run_mlflow

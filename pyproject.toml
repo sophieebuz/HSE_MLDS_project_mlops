@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "hse-mlds-project-mlops"
 version = "0.1.0"
-description = "Project for Mlopos course"
+description = "Project for Mlops course"
 authors = ["Sophie Buzaeva <sofibuz@mail.ru>"]
 readme = "README.md"
-repository = "https://github.com/sophieebuz/HSE_MLDS_project_mlops.git"
-packages = [{include = "hse_mlds_project_mlops"}]
+repository = "https://github.com/sophieebuz/hse-mlds-project-mlops.git"
+packages = [{include = "utils"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

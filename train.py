@@ -13,7 +13,7 @@ from config_hydra import VineConfig
 from utils.dataset import VineDataset, collate_fn
 from utils.model import Classification
 from utils.seed import seed_everything, seed_worker
-from utils.trainer import train
+from utils.trainer import Trainer
 
 
 cs = ConfigStore.instance()
@@ -51,7 +51,7 @@ def main(cfg: VineConfig) -> None:
     criterion = nn.CrossEntropyLoss().to(DEVICE)
 
     # print(mlflow.get_tracking_uri())
-    mlflow.set_tracking_uri("http://128.0.1.1:8080")
+    # mlflow.set_tracking_uri("http://128.0.1.1:8080")
     # tracking_uri = mlflow.get_tracking_uri()
     # print(f"Current tracking uri: {tracking_uri}")
     run_mlflow = cfg.run_mlflow.run_mlflow
@@ -66,15 +66,17 @@ def main(cfg: VineConfig) -> None:
         with mlflow.start_run(
             run_name=cfg.run_mlflow.run_name, experiment_id=experiment_id
         ):
-            train_losses, test_losses, train_metrics, test_metrics = train(
+            trainer = Trainer(
                 model,
                 optimizer,
                 None,
                 criterion,
+                DEVICE,
+            )
+            train_losses, test_losses, train_metrics, test_metrics = trainer.train(
                 train_loader,
                 test_loader,
                 NUM_EPOCHS,
-                DEVICE,
                 cfg.plot,
                 run_mlflow,
             )
@@ -82,17 +84,19 @@ def main(cfg: VineConfig) -> None:
             mlflow.log_param("git branch", get_git_branch(Path.cwd()))
             mlflow.log_params(dict(cfg))
     else:
-        train_losses, test_losses, train_metrics, test_metrics = train(
+        trainer = Trainer(
             model,
             optimizer,
             None,
             criterion,
+            DEVICE,
+            )
+        train_losses, test_losses, train_metrics, test_metrics = trainer.train(
             train_loader,
             test_loader,
             NUM_EPOCHS,
-            DEVICE,
             cfg.plot,
-            run_mlflow,
+            run_mlflow
         )
 
     # print(test_metrics["f1 macro"])
@@ -103,8 +107,8 @@ def main(cfg: VineConfig) -> None:
 
     torch.save(
         {
-            "model_state": model.state_dict(),
-            "optimizer_state": optimizer.state_dict(),
+            "model_state": trainer.model.state_dict(),
+            "optimizer_state": trainer.optimizer.state_dict(),
         },
         model_save_file,
     )

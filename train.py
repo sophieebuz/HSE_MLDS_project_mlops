@@ -90,13 +90,9 @@ def main(cfg: VineConfig) -> None:
             None,
             criterion,
             DEVICE,
-            )
+        )
         train_losses, test_losses, train_metrics, test_metrics = trainer.train(
-            train_loader,
-            test_loader,
-            NUM_EPOCHS,
-            cfg.plot,
-            run_mlflow
+            train_loader, test_loader, NUM_EPOCHS, cfg.plot, run_mlflow
         )
 
     # print(test_metrics["f1 macro"])

@@ -27,10 +27,10 @@ class Trainer:
 
     @staticmethod
     def training_epoch(
-            self,
-            train_loader: DataLoader,
-            run_mlflow: bool,
-            epoch: int,
+        self,
+        train_loader: DataLoader,
+        run_mlflow: bool,
+        epoch: int,
     ):
         num_batches = 0.0
         train_loss = 0.0
@@ -70,14 +70,13 @@ class Trainer:
             mlflow.log_metric("f1 macro_train", metrics["f1 macro"], step=epoch)
         return train_loss, metrics
 
-
     @staticmethod
     @torch.no_grad()
     def validation_epoch(
-            self,
-            test_loader: DataLoader,
-            run_mlflow: bool,
-            epoch: int,
+        self,
+        test_loader: DataLoader,
+        run_mlflow: bool,
+        epoch: int,
     ):
         num_batches = 0.0
         test_loss = 0.0
@@ -113,12 +112,12 @@ class Trainer:
         return test_loss, metrics
 
     def train(
-            self,
-            train_loader: DataLoader,
-            test_loader: DataLoader,
-            num_epochs: int,
-            plot: bool,
-            run_mlflow: bool,
+        self,
+        train_loader: DataLoader,
+        test_loader: DataLoader,
+        num_epochs: int,
+        plot: bool,
+        run_mlflow: bool,
     ):
         train_losses = []
         test_losses = []
@@ -165,4 +164,3 @@ class Trainer:
             y_preds.extend(y_pred)
             y_true.extend(target.detach().numpy())
         return y_true, y_preds
-

@@ -51,9 +51,7 @@ def main(cfg: VineConfig) -> None:
         None,
         DEVICE,
     )
-    y_true, y_pred = trainer.inference(
-        test_loader
-    )
+    y_true, y_pred = trainer.inference(test_loader)
     target_names = ["class 0", "class 1", "class 2"]
     print(
         classification_report(y_true, y_pred, target_names=target_names, zero_division=0)

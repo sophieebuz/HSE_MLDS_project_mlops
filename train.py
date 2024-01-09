@@ -50,18 +50,13 @@ def main(cfg: VineConfig) -> None:
     optimizer = torch.optim.Adam(model.parameters(), **cfg.optimizer)
     criterion = nn.CrossEntropyLoss().to(DEVICE)
 
-    # print(mlflow.get_tracking_uri())
-    # mlflow.set_tracking_uri("http://128.0.1.1:8080")
-    # tracking_uri = mlflow.get_tracking_uri()
-    # print(f"Current tracking uri: {tracking_uri}")
+    mlflow.set_tracking_uri("http://128.0.1.1:8080")
     run_mlflow = cfg.run_mlflow.run_mlflow
     if run_mlflow:
         exp_name = cfg.run_mlflow.exp_name
         experiment_id = mlflow.create_experiment(exp_name)
         print(experiment_id)
         mlflow.set_experiment(exp_name)
-        # experiment_id=973347247450672054
-        # experiment_id = 658355158496838367
 
         with mlflow.start_run(
             run_name=cfg.run_mlflow.run_name, experiment_id=experiment_id
@@ -94,8 +89,6 @@ def main(cfg: VineConfig) -> None:
         train_losses, test_losses, train_metrics, test_metrics = trainer.train(
             train_loader, test_loader, NUM_EPOCHS, cfg.plot, run_mlflow
         )
-
-    # print(test_metrics["f1 macro"])
 
     model_save_file = cfg.paths.model
     if os.path.exists(model_save_file):

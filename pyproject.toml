@@ -34,10 +34,6 @@ profile = "black"
 line_length = 90
 lines_after_imports = 2
 
-#[tool.flake8]
-#max-line-length = 90
-#ignore = ['D100', 'D101', 'D102', 'D103', 'D105', 'D107', 'T201',  'N806']
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
